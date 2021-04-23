@@ -9,9 +9,9 @@ I created this project for trying out new stuff with an actual project (this inc
 These are the **Features** which would be cool to have.
 Not all might get implemented because thinking of an idea is much more simpler than actually doing it.
 
-[ ] Modern looking Sound Visualizer
-[ ] Ability to change color to the beat
-[ ] A Gradient effect on the color to make it more modern looking
+* [ ] Modern looking Sound Visualizer
+* [ ] Ability to change color to the beat
+* [ ] A Gradient effect on the color to make it more modern looking
 
 More features might be added in the future and some might be removed.
 Nothing is final.
