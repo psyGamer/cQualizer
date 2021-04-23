@@ -1,8 +1,8 @@
 ---
-name: Feature request
-about: Suggest a new idea for this project
+name: Enchancement
+about: If you have an idea for improving an alreading existing feature
 title: ''
-labels: ''
+labels: Enhancement
 assignees: ''
 
 ---
