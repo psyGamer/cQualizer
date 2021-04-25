@@ -1,4 +1,4 @@
 # Unneeded files
 
-*/.vs
+**/.vs
 cQualizer/obj
