@@ -6,6 +6,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Shaders\Color.frag.glsl" />
+    <None Remove="Shaders\Color.vert.glsl" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Shaders\Color.frag.glsl" />
+    <EmbeddedResource Include="Shaders\Color.vert.glsl" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="OpenTK" Version="4.6.3" />
   </ItemGroup>
 

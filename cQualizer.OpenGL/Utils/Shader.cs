@@ -1,10 +1,8 @@
 ﻿using System;
 
-using cQualizer.OpenGL.Util;
-
 using OpenTK.Graphics.OpenGL4;
 
-namespace cQualizer.OpenGL.Graphics {
+namespace cQualizer.OpenGL.Utils {
 
 	public class Shader : IBindable {
 
@@ -39,6 +37,11 @@ namespace cQualizer.OpenGL.Graphics {
 
 			if (status == 0)
 				Console.WriteLine("Warning ! Program could not be linked: " + GL.GetShaderInfoLog(fragmentShader));
+		}
+
+		public void SetUniformVec4f(string uniformName, float v1, float v2, float v3, float v4) {
+			Enable();
+			GL.Uniform4(GL.GetUniformLocation(Program, uniformName), v1, v2, v3, v4);
 		}
 
 		public void Enable() {

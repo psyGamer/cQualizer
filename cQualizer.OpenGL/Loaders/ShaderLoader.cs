@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Reflection;
+using cQualizer.OpenGL.Utils;
 
-namespace cQualizer.OpenGL.Graphics {
+namespace cQualizer.OpenGL.Loaders {
 
 	public static class ShaderLoader {
 
@@ -22,19 +23,24 @@ namespace cQualizer.OpenGL.Graphics {
 
 		private static string GetShaderCode(string shaderName, params string[] fileEndings) {
 			Assembly assembly = Assembly.GetExecutingAssembly();
-			Stream fragmentStream = null;
+			Stream fileStream = null;
 
 			foreach (var fileEnding in fileEndings) {
-				try { fragmentStream = assembly.GetManifestResourceStream($"cQualizer.OpenGL.Shaders.{shaderName}.{fileEnding}.glsl"); break; } catch (FileNotFoundException) { }
+				try {
+					if ((fileStream = assembly.GetManifestResourceStream($"cQualizer.OpenGL.Shaders.{shaderName}.{fileEnding}.glsl")) == null)
+						throw new FileNotFoundException();
+
+					break;
+				} catch (FileNotFoundException) { }
 			}
 
-			if (fragmentStream is null) {
+			if (fileStream is null) {
 				Console.Error.WriteLine($"Could not find the {fileEndings[0]} shader: {shaderName}");
 
 				return "";
 			}
 
-			return new StreamReader(fragmentStream).ReadToEnd();
+			return new StreamReader(fileStream).ReadToEnd();
 		}
 	}
 }
