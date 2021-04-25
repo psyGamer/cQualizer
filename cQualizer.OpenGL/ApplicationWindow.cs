@@ -14,6 +14,33 @@ namespace cQualizer.OpenGL {
 
 		protected override void OnLoad() {
 			base.OnLoad();
+			// Generate Vertecies
+
+			int sampleSize = 10;
+			float radius = 0.5f;
+
+			vertecies = new float[sampleSize * 4 * 2 + 2];
+			indicies = new uint[sampleSize * 4 * 3];
+
+			vertecies[sampleSize * 4 * 2 + 0] = 0.0f;
+			vertecies[sampleSize * 4 * 2 + 1] = 0.0f;
+
+			for (float a = 0 ; a < 360 ; a += 90.0f / sampleSize) {
+				radius = (float) new Random().NextDouble();
+				float radiens = (MathF.PI / 180) * a;
+				float x = MathF.Cos(radiens) * radius;
+				float y = MathF.Sin(radiens) * radius;
+				uint i = (uint) (a / (90 / sampleSize));
+
+				vertecies[i * 2 + 0] = x;
+				vertecies[i * 2 + 1] = y;
+
+				indicies[i * 3 + 0] = 0;
+				indicies[i * 3 + 1] = i + 1;
+				indicies[i * 3 + 2] = (uint) ((i + 2) % (sampleSize * 4));
+			}
+
+
 
 			vertexArray = GL.GenVertexArray();
 			vbo = new VertexBuffer(vertecies);
@@ -27,17 +54,9 @@ namespace cQualizer.OpenGL {
 			GL.Viewport(0, 0, Size.X, Size.Y);
 		}
 
-		private static readonly float[] vertecies = new float[] {
-			-0.5f, -0.5f,
-			 0.5f, -0.5f,
-			 0.5f,  0.5f,
-			-0.5f,  0.5f
-		};
+		private static float[] vertecies;
 
-		private static readonly uint[] indicies = new uint[] {
-			0, 1, 2,
-			2, 0, 3
-		};
+		private uint[] indicies;
 
 		private int vertexArray;
 		private VertexBuffer vbo;
@@ -60,9 +79,12 @@ namespace cQualizer.OpenGL {
 
 			ibo.Enable();
 			shader.SetUniformVec4f("uColor", MathF.Sin(i) * 0.5f + 0.5f, 0.0f, 0.0f, 1.0f);
+			shader.SetUniformInt("uRadius", (int) (MathF.Cos(i) * 100));
+			shader.SetUniformInt("uSampleSize", vertecies.Length);
+			shader.Disable();
 
 			//GL.DrawArrays(PrimitiveType.Triangles, 0, 3);
-			GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
+			GL.DrawElements(PrimitiveType.Triangles, indicies.Length, DrawElementsType.UnsignedInt, 0);
 
 			SwapBuffers();
 		}

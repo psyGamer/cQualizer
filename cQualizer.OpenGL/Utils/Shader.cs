@@ -39,6 +39,11 @@ namespace cQualizer.OpenGL.Utils {
 				Console.WriteLine("Warning ! Program could not be linked: " + GL.GetShaderInfoLog(fragmentShader));
 		}
 
+		public void SetUniformInt(string uniformName, int i1) {
+			Enable();
+			GL.Uniform1(GL.GetUniformLocation(Program, uniformName), i1);
+		}
+
 		public void SetUniformVec4f(string uniformName, float v1, float v2, float v3, float v4) {
 			Enable();
 			GL.Uniform4(GL.GetUniformLocation(Program, uniformName), v1, v2, v3, v4);

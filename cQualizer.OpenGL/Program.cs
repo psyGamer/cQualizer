@@ -1,5 +1,6 @@
 ﻿using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.Common;
+using OpenTK.Mathematics;
 
 namespace cQualizer.OpenGL {
 
@@ -19,6 +20,7 @@ namespace cQualizer.OpenGL {
 			nativeSettings.Flags = ContextFlags.Debug;
 			nativeSettings.WindowBorder = WindowBorder.Resizable;
 			nativeSettings.Title = "cQualizer";
+			nativeSettings.Size = new Vector2i(400, 400);
 
 			var window = new ApplicationWindow(gameSettings, nativeSettings);
 
