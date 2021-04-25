@@ -1,6 +1,5 @@
 ﻿using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.Common;
-using System;
 
 namespace cQualizer.OpenGL {
 
