@@ -8,7 +8,7 @@ namespace cQualizer.OpenGL.Utils {
 
 		public VertexBuffer(float[] data, int size = -1, BufferUsageHint usage = BufferUsageHint.StaticDraw) {
 			BufferID = GL.GenBuffer();
-			Enable();	
+			Enable();
 			GL.BufferData(BufferTarget.ArrayBuffer, (size < 0) ? data.Length * sizeof(float) : size, data, usage);
 		}
 

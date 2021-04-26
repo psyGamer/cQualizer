@@ -6,11 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Shaders\Circle.frag.glsl" />
+    <None Remove="Shaders\Circle.vert.glsl" />
     <None Remove="Shaders\Color.frag.glsl" />
     <None Remove="Shaders\Color.vert.glsl" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Shaders\Circle.frag.glsl" />
+    <EmbeddedResource Include="Shaders\Circle.vert.glsl" />
     <EmbeddedResource Include="Shaders\Color.frag.glsl" />
     <EmbeddedResource Include="Shaders\Color.vert.glsl" />
   </ItemGroup>

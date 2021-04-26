@@ -4,19 +4,27 @@ namespace cQualizer.OpenGL.Utils {
 
 	public class VertexArray : IBindable {
 
-		public int ID { get; private set; } = -1;
+		public int ArrayID { get; private set; } = -1;
 		public VertexBuffer VertexBuffer { get; private set; }
+		public IndexBuffer IndexBuffer { get; private set; }
 
-		public VertexArray() {
-			ID = GL.GenVertexArray();
+		public VertexArray(VertexBuffer vertexBuffer, IndexBuffer indexBuffer = null) {
+			ArrayID = GL.GenVertexArray();
 
 			Enable();
+			vertexBuffer.Enable();
+			indexBuffer?.Enable();
 
-			//VertexBuffer = new VertexBuffer();
+			VertexBuffer = vertexBuffer;
+			IndexBuffer = indexBuffer;
+		}
+
+		~ VertexArray() {
+			GL.DeleteVertexArray(ArrayID);
 		}
 
 		public void Enable() {
-			GL.BindVertexArray(ID);
+			GL.BindVertexArray(ArrayID);
 		}
 
 		public void Disable() {

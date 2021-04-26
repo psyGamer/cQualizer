@@ -36,12 +36,17 @@ namespace cQualizer.OpenGL.Utils {
 			GL.GetProgram(Program, GetProgramParameterName.LinkStatus, out status);
 
 			if (status == 0)
-				Console.WriteLine("Warning ! Program could not be linked: " + GL.GetShaderInfoLog(fragmentShader));
+				Console.WriteLine("Warning ! Program could not be linked: " + GL.GetShaderInfoLog(Program));
 		}
 
 		public void SetUniformInt(string uniformName, int i1) {
 			Enable();
 			GL.Uniform1(GL.GetUniformLocation(Program, uniformName), i1);
+		}
+
+		public void SetUniformFloat(string uniformName, float f1) {
+			Enable();
+			GL.Uniform1(GL.GetUniformLocation(Program, uniformName), f1);
 		}
 
 		public void SetUniformVec4f(string uniformName, float v1, float v2, float v3, float v4) {
