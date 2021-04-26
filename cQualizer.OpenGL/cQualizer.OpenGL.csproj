@@ -12,6 +12,8 @@
     <None Remove="Shaders\Color.vert.glsl" />
     <None Remove="Shaders\Sound.frag.glsl" />
     <None Remove="Shaders\Sound.vert.glsl" />
+    <None Remove="Shaders\Sound2.frag.glsl" />
+    <None Remove="Shaders\Sound2.vert.glsl" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +23,8 @@
     <EmbeddedResource Include="Shaders\Color.vert.glsl" />
     <EmbeddedResource Include="Shaders\Sound.frag.glsl" />
     <EmbeddedResource Include="Shaders\Sound.vert.glsl" />
+    <EmbeddedResource Include="Shaders\Sound2.frag.glsl" />
+    <EmbeddedResource Include="Shaders\Sound2.vert.glsl" />
   </ItemGroup>
 
   <ItemGroup>

@@ -20,7 +20,7 @@ namespace cQualizer.OpenGL.Components {
 		}
 
 		~ VertexArray() {
-			GL.DeleteVertexArray(ArrayID);
+			//GL.DeleteVertexArray(ArrayID);
 		}
 
 		public void Enable() {

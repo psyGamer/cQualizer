@@ -16,7 +16,9 @@ namespace cQualizer.OpenGL {
 		protected override void OnLoad() {
 			base.OnLoad();
 
-			RendererRegistry.RegisterRenderer(new CircleRenderer(50, 0.5f));
+			//RendererRegistry.RegisterRenderer(new CircleRenderer(50, 0.5f));
+			//RendererRegistry.RegisterRenderer(new SoundRenderer(2, 0.1f));
+			RendererRegistry.RegisterRenderer(new SoundRendererAttempt2(300));
 		}
 
 		protected override void OnResize(ResizeEventArgs e) {
@@ -28,7 +30,7 @@ namespace cQualizer.OpenGL {
 		protected override void OnRenderFrame(FrameEventArgs args) {
 			base.OnRenderFrame(args);
 
-			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+			GL.Clear(ClearBufferMask.ColorBufferBit);
 
 			RendererRegistry.Render(this, new Vector2(Size.X / MathF.Min(Size.X, Size.Y), Size.Y / MathF.Min(Size.X, Size.Y)));
 

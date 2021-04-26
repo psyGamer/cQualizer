@@ -14,7 +14,7 @@ namespace cQualizer.OpenGL.Components {
 		}
 
 		~ IndexBuffer() {
-			GL.DeleteBuffer(BufferID);
+			//GL.DeleteBuffer(BufferID);
 		}
 
 		public void Enable() {

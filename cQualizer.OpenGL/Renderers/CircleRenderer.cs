@@ -31,9 +31,9 @@ namespace cQualizer.OpenGL.Renderers {
 			for (uint i = 0 ; i < sampleSize * 4 ; i++) {
 				vertecieAngles[i + 1] = i * 90.0f / sampleSize;
 
-				indicies[i * 3 + 0] = 0;
-				indicies[i * 3 + 1] = i + 1;
-				indicies[i * 3 + 2] = (uint) ((i + 2) % (sampleSize * 4));
+				indicies[i * 3 + 0] =      0;
+				indicies[i * 3 + 1] =  i + 1;
+				indicies[i * 3 + 2] = (i + 2) % (sampleSize * 4);
 			}
 
 			VertexArray = new VertexArray(new VertexBuffer(vertecieAngles), new IndexBuffer(indicies));

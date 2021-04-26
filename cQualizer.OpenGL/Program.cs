@@ -12,8 +12,8 @@ namespace cQualizer.OpenGL {
 			var nativeSettings = new NativeWindowSettings();
 
 			gameSettings.IsMultiThreaded = false;
-			gameSettings.RenderFrequency = 0;
-			gameSettings.UpdateFrequency = 30;
+			gameSettings.RenderFrequency = 60;
+			gameSettings.UpdateFrequency = 2;
 
 			nativeSettings.IsFullscreen = false;
 			nativeSettings.StartFocused = true;
