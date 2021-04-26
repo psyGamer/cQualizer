@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Reflection;
-using cQualizer.OpenGL.Utils;
+using cQualizer.OpenGL.Components;
 
-namespace cQualizer.OpenGL.Loaders {
+namespace cQualizer.OpenGL.Utils {
 
-	public static class ShaderLoader {
+	public static class ShdaerUtil {
 
 		private static readonly Dictionary<string, Shader> shaderCache = new Dictionary<string, Shader>();
 

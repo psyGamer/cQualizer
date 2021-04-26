@@ -1,34 +1,34 @@
-﻿using System;
+﻿using cQualizer.OpenGL.Components;
+using OpenTK.Mathematics;
+using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace cQualizer.OpenGL.Renderers {
 
-	public interface IRenderer {
-		void Load();
-		void Render();
-		void Update();
+	public abstract class IRenderer {
+		public abstract Shader Shader { get; protected set; }
+
+		public abstract void Render(ApplicationWindow window, Vector2 aspectRatio);
+		public abstract void Update(ApplicationWindow window, Vector2 aspectRatio);
 	}
 
 	public static class RendererRegistry {
 
-		private static List<IRenderer> renderers = new List<IRenderer>();
+		private static readonly List<IRenderer> renderers = new List<IRenderer>();
 
 		public static void RegisterRenderer(IRenderer renderer) {
-			renderer.Load();
 			renderers.Add(renderer);
 		}
 
-		public static void Update() {
-			foreach (var renderer in renderers) {
-				renderer.Update();
-			}
+		public static void Update(ApplicationWindow window, Vector2 aspectRatio) {
+			renderers.ForEach(renderer => renderer.Update(window, aspectRatio));
 		}
 
-		public static void Render() {
-			foreach (var renderer in renderers) {
-				renderer.Render();
-			}
+		public static void Render(ApplicationWindow window, Vector2 aspectRatio) {
+			renderers.ForEach(renderer => {
+				renderer.Shader.SetUniformMatrix4("uProjection", Matrix4.CreateOrthographic(aspectRatio.X, aspectRatio.Y, -1.0f, 1.0f)); 
+				renderer.Render(window, aspectRatio);
+			});
 		}
 	}
 }

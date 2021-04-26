@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace cQualizer.OpenGL.Utils {
+namespace cQualizer.OpenGL.Components {
 
 	public interface IBindable {
 		void Enable();

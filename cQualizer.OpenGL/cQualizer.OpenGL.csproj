@@ -10,6 +10,8 @@
     <None Remove="Shaders\Circle.vert.glsl" />
     <None Remove="Shaders\Color.frag.glsl" />
     <None Remove="Shaders\Color.vert.glsl" />
+    <None Remove="Shaders\Sound.frag.glsl" />
+    <None Remove="Shaders\Sound.vert.glsl" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,6 +19,8 @@
     <EmbeddedResource Include="Shaders\Circle.vert.glsl" />
     <EmbeddedResource Include="Shaders\Color.frag.glsl" />
     <EmbeddedResource Include="Shaders\Color.vert.glsl" />
+    <EmbeddedResource Include="Shaders\Sound.frag.glsl" />
+    <EmbeddedResource Include="Shaders\Sound.vert.glsl" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,8 +1,10 @@
 ﻿using cQualizer.OpenGL.Renderers;
 
 using OpenTK.Graphics.OpenGL4;
+using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
+using System;
 
 namespace cQualizer.OpenGL {
 
@@ -10,10 +12,6 @@ namespace cQualizer.OpenGL {
 
 		public ApplicationWindow(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings)
 		: base(gameWindowSettings, nativeWindowSettings) { }
-
-		~ ApplicationWindow() {
-			
-		}
 
 		protected override void OnLoad() {
 			base.OnLoad();
@@ -32,7 +30,7 @@ namespace cQualizer.OpenGL {
 
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-			RendererRegistry.Render();
+			RendererRegistry.Render(this, new Vector2(Size.X / MathF.Min(Size.X, Size.Y), Size.Y / MathF.Min(Size.X, Size.Y)));
 
 			SwapBuffers();
 		}
@@ -40,7 +38,7 @@ namespace cQualizer.OpenGL {
 		protected override void OnUpdateFrame(FrameEventArgs args) {
 			base.OnUpdateFrame(args);
 
-			RendererRegistry.Update();
+			RendererRegistry.Update(this, new Vector2(Size.X / MathF.Min(Size.X, Size.Y), Size.Y / MathF.Min(Size.X, Size.Y)));
 		}
 	}
 }
