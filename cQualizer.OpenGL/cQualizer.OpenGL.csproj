@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
 	  
 	<PublishSingleFile>true</PublishSingleFile>
@@ -30,6 +30,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="MathNet.Numerics" Version="4.15.0" />
+    <PackageReference Include="NAudio" Version="2.0.0" />
     <PackageReference Include="OpenTK" Version="4.6.3" />
   </ItemGroup>
 

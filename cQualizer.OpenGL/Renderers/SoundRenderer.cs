@@ -8,7 +8,8 @@ using System;
 
 
 namespace cQualizer.OpenGL.Renderers {
-	class SoundRenderer : IRenderer {
+
+	public class SoundRenderer : IRenderer {
 
 		public override Shader Shader { get; protected set; }
 
@@ -61,14 +62,37 @@ namespace cQualizer.OpenGL.Renderers {
 		}
 
 		private float off = 0;
+		private float[] fftData = new float[2048];
+
+		private static float constrain(float n, float high, float low) {
+			return MathF.Max(MathF.Min(n, low), high);
+		}
+
+		private static float map(float startA, float endA, float startB, float endB, float n) {
+			float newval = (n - startA) / (endA - startA) * (endB - startB) + startB;
+
+			if (startB < endB) {
+				return constrain(newval, startB, endB);
+			} else {
+				return constrain(newval, endB, startB);
+			}
+		}
 
 		private void UpdateRadius() {
+			//SoundSignal.GetFFTData(fftData);
+			if (fftData.Length <= 0) {
+				Console.WriteLine("Unable to get data");
+				return;
+			}
+
 			for (int i = 5 ; i < vertecies.Length ; i += 3) {
-				float positionOnCircumference = ((i - 2) / 3) / (float) (faces + 1);
+				float positionOnCircumference = map(1, faces / 3, 0.0f, 1.0f, (i - 2) / 3);//(i - 2) / 3 / (float) (faces + 1);
+				int index = (int) map(0.0f, 1.0f, 0.0f, fftData.Length - 1, positionOnCircumference);
 
-				positionOnCircumference *= 3 * MathF.PI;
+				vertecies[i] = fftData[(int) MathF.Min(index, fftData.Length - 1)] * 10000;
+				Console.WriteLine(vertecies[i]);
 
-				vertecies[i] = MathF.Abs(MathF.Cos(positionOnCircumference + off)) * 0.6f + 0.2f;//positionOnCircumference / 2.0f; MathF.Abs(vertecies[i - 1]);//(positionOnCircumference * 1000) % 2 == 0 ? 0.3f : 0.6f; //
+				//vertecies[i] = MathF.Abs(MathF.Cos(positionOnCircumference + off)) * 0.6f + 0.2f;//positionOnCircumference / 2.0f; MathF.Abs(vertecies[i - 1]);//(positionOnCircumference * 1000) % 2 == 0 ? 0.3f : 0.6f; //
 			}
 
 			/*
@@ -90,7 +114,7 @@ namespace cQualizer.OpenGL.Renderers {
 			vertexBuffer.SetData(vertecies, -1, BufferUsageHint.DynamicDraw);
 			vertexArray.Disable();
 
-			Console.WriteLine("Update Array");
+			//Console.WriteLine("Update Array");
 		}
 
 		public override void Render(ApplicationWindow window, Vector2 aspectRatio) {
