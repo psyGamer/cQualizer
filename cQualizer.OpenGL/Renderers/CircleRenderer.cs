@@ -1,5 +1,5 @@
 ﻿using cQualizer.OpenGL.Utils;
-using cQualizer.OpenGL.Components;
+using cQualizer.OpenGL.Components.Graphics;
 using OpenTK.Graphics.OpenGL4;
 using System;
 using System.Collections.Generic;

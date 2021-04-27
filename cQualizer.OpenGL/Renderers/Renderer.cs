@@ -1,4 +1,4 @@
-﻿using cQualizer.OpenGL.Components;
+﻿using cQualizer.OpenGL.Components.Graphics;
 using OpenTK.Mathematics;
 using System;
 using System.Collections.Generic;

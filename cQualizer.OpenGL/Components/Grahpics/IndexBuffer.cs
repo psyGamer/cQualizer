@@ -1,6 +1,6 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 
-namespace cQualizer.OpenGL.Components {
+namespace cQualizer.OpenGL.Components.Graphics {
 
 	public class IndexBuffer : IBindable {
 

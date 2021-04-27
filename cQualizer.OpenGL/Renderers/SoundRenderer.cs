@@ -1,4 +1,4 @@
-using cQualizer.OpenGL.Components;
+using cQualizer.OpenGL.Components.Graphics;
 using cQualizer.OpenGL.Utils;
 
 using OpenTK.Graphics.OpenGL4;

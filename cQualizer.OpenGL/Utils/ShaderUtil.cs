@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Reflection;
-using cQualizer.OpenGL.Components;
+using cQualizer.OpenGL.Components.Graphics;
 
 namespace cQualizer.OpenGL.Utils {
 

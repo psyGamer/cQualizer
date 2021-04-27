@@ -1,7 +1,7 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 using System;
 
-namespace cQualizer.OpenGL.Components {
+namespace cQualizer.OpenGL.Components.Graphics {
 
 	public class VertexBuffer : IBindable {
 
