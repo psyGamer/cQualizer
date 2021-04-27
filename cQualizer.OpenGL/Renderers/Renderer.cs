@@ -26,7 +26,7 @@ namespace cQualizer.OpenGL.Renderers {
 
 		public static void Render(ApplicationWindow window, Vector2 aspectRatio) {
 			renderers.ForEach(renderer => {
-				renderer.Shader.SetUniformMatrix4("uProjection", Matrix4.CreateOrthographic(aspectRatio.X, aspectRatio.Y, -1.0f, 1.0f));
+				renderer.Shader.SetUniformMatrix4("uProjection", Matrix4.CreateOrthographic(aspectRatio.X * 2, aspectRatio.Y * 2, -1.0f, 1.0f));
 				renderer.Render(window, aspectRatio);
 			});
 		}

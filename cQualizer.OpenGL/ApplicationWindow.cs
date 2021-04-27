@@ -18,7 +18,7 @@ namespace cQualizer.OpenGL {
 
 			//RendererRegistry.RegisterRenderer(new CircleRenderer(50, 0.5f));
 			//RendererRegistry.RegisterRenderer(new SoundRenderer(2, 0.1f));
-			RendererRegistry.RegisterRenderer(new SoundRendererAttempt2(300));
+			RendererRegistry.RegisterRenderer(new SoundRenderer(500));
 		}
 
 		protected override void OnResize(ResizeEventArgs e) {

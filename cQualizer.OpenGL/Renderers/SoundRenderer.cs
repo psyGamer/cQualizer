@@ -1,4 +1,4 @@
-﻿using cQualizer.OpenGL.Components;
+using cQualizer.OpenGL.Components;
 using cQualizer.OpenGL.Utils;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
@@ -7,8 +7,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
+using RandomAccessPerlinNoise;
+
 namespace cQualizer.OpenGL.Renderers {
-	class SoundRendererAttempt2 : IRenderer {
+	class SoundRenderer : IRenderer {
 
 		public override Shader Shader { get; protected set; }
 
@@ -16,18 +18,18 @@ namespace cQualizer.OpenGL.Renderers {
 		private VertexBuffer vertexBuffer;
 		private IndexBuffer indexBuffer;
 
+		private uint faces;
+
 		private float[] vertecies;
 		private uint [] indicies;
 
-		public SoundRendererAttempt2(uint faces) {
+		public SoundRenderer(uint faces) {
+			this.faces = faces;
+
 			float theeta = 2 * MathF.PI / faces;
 
 			vertecies = new float[faces * 3 + 3];
 			indicies  = new uint [faces * 3];
-
-			vertecies[0] = 0.0f;
-			vertecies[1] = 0.0f;
-			vertecies[2] = 1.0f;
 
 			float angle = 0;
 
@@ -57,14 +59,36 @@ namespace cQualizer.OpenGL.Renderers {
 			GL.EnableVertexAttribArray(0);
 			GL.EnableVertexAttribArray(1);
 
-			Shader = ShdaerUtil.LoadShader("Sound2");
+			Shader = ShdaerUtil.LoadShader("Sound");
+
+			//gen = new NoiseGenerator(new Random().Next(), 1.0, 1, new int[] { vertecies.Length / 3, 100 }, true, Interpolations.Linear);
 		}
+
+		private float off = 0;
 
 		private void UpdateRadius() {
 			for (int i = 5 ; i < vertecies.Length ; i += 3) {
-				vertecies[i] = (float) Perlin.perlin(i, i, i);
-				//vertecies[i] += (float) new Random().NextDouble() * 0.5f + 0.5f;
+				float positionOnCircumference = ((i - 2) / 3) / (float) (faces + 1);
+
+				positionOnCircumference *= 3 * MathF.PI;
+
+				vertecies[i] = MathF.Abs(MathF.Cos(positionOnCircumference + off)) * 0.6f + 0.2f;//positionOnCircumference / 2.0f; MathF.Abs(vertecies[i - 1]);//(positionOnCircumference * 1000) % 2 == 0 ? 0.3f : 0.6f; //
 			}
+
+			/*
+			for (int i = 5 ; i < vertecies.Length ; i += 3) {
+				float idx = (i - 2) / 3.0f / (vertecies.Length / 3.0f);
+				//vertecies[i] = MathF.Asin(idx);
+				vertecies[i] = (float) gen.GetValue(new double[] { i, off });
+				Console.WriteLine($"{vertecies[i]} | {(i - 2) / 3.0f} / {vertecies.Length / 3}");
+				//MathF.Sin(i / 30 + off);
+				//(float) gen.GetValue(new double[] { i, off });
+				//vertecies[i] = new NoiseMap().GetValue(i, Environment.TickCount);
+				//vertecies[i] += (float) new Random().NextDouble() * 0.5f + 0.5f;
+			}*/
+
+			off += 0.01f;
+			off %= MathF.PI;
 
 			vertexArray.Enable();
 			vertexBuffer.SetData(vertecies, -1, BufferUsageHint.DynamicDraw);
@@ -84,7 +108,7 @@ namespace cQualizer.OpenGL.Renderers {
 		}
 
 		public override void Update(ApplicationWindow window, Vector2 aspectRatio) {
-				UpdateRadius();
+			UpdateRadius();
 			//if (new Random().NextDouble() > 0.9) {
 			//} else {
 			//	Console.WriteLine("Update");
