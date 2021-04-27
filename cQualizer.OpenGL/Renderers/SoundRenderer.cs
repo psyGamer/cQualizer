@@ -57,9 +57,7 @@ namespace cQualizer.OpenGL.Renderers {
 			GL.EnableVertexAttribArray(0);
 			GL.EnableVertexAttribArray(1);
 
-			Shader = ShdaerUtil.LoadShader("Sound");
-
-			//gen = new NoiseGenerator(new Random().Next(), 1.0, 1, new int[] { vertecies.Length / 3, 100 }, true, Interpolations.Linear);
+			Shader = ShaderUtil.LoadShader("Sound");
 		}
 
 		private float off = 0;

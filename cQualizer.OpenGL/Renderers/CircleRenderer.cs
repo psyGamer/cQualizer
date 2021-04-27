@@ -37,7 +37,7 @@ namespace cQualizer.OpenGL.Renderers {
 			}
 
 			VertexArray = new VertexArray(new VertexBuffer(vertecieAngles), new IndexBuffer(indicies));
-			Shader = ShdaerUtil.LoadShader("Circle");
+			Shader = ShaderUtil.LoadShader("Circle");
 		}
 
 		public override void Render(ApplicationWindow window, Vector2 aspectRatio) {

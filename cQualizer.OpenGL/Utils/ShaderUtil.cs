@@ -7,7 +7,7 @@ using cQualizer.OpenGL.Components;
 
 namespace cQualizer.OpenGL.Utils {
 
-	public static class ShdaerUtil {
+	public static class ShaderUtil {
 
 		private static readonly Dictionary<string, Shader> shaderCache = new Dictionary<string, Shader>();
 
