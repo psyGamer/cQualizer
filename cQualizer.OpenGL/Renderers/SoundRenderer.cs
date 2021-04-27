@@ -1,13 +1,11 @@
 using cQualizer.OpenGL.Components;
 using cQualizer.OpenGL.Utils;
+
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 
-using RandomAccessPerlinNoise;
+using System;
+
 
 namespace cQualizer.OpenGL.Renderers {
 	class SoundRenderer : IRenderer {
