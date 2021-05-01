@@ -16,6 +16,8 @@
     <None Remove="Shaders\Circle.vert.glsl" />
     <None Remove="Shaders\Color.frag.glsl" />
     <None Remove="Shaders\Color.vert.glsl" />
+    <None Remove="Shaders\Freqency.frag.glsl" />
+    <None Remove="Shaders\Freqency.vert.glsl" />
     <None Remove="Shaders\Sound.frag.glsl" />
     <None Remove="Shaders\Sound.vert.glsl" />
   </ItemGroup>
@@ -25,11 +27,14 @@
     <EmbeddedResource Include="Shaders\Circle.vert.glsl" />
     <EmbeddedResource Include="Shaders\Color.frag.glsl" />
     <EmbeddedResource Include="Shaders\Color.vert.glsl" />
+    <EmbeddedResource Include="Shaders\Freqency.frag.glsl" />
+    <EmbeddedResource Include="Shaders\Freqency.vert.glsl" />
     <EmbeddedResource Include="Shaders\Sound.frag.glsl" />
     <EmbeddedResource Include="Shaders\Sound.vert.glsl" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CSCore" Version="1.2.1.2" />
     <PackageReference Include="MathNet.Numerics" Version="4.15.0" />
     <PackageReference Include="NAudio" Version="2.0.0" />
     <PackageReference Include="OpenTK" Version="4.6.3" />

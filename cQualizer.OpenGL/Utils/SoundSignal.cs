@@ -1,6 +1,8 @@
-﻿using NAudio.Wave;
+﻿using System;
+using System.Linq;
+using System.Numerics;
 
-using System;
+using CSCore.SoundIn;
 
 using MathNet.Numerics.IntegralTransforms;
 
@@ -8,44 +10,52 @@ namespace cQualizer.OpenGL.Utils {
 
 	public class SoundSignal {
 
-		private WasapiLoopbackCapture capture;
+		private WasapiCapture capture;
 
-		public double[] Wave { get; private set; }
-		public double[] FFT { get; private set; }
+		public Complex[] Wave { get; private set; }
+		public Complex[] FFT { get; private set; }
 
 		public SoundSignal() {
 			capture = new WasapiLoopbackCapture();
-			capture.DataAvailable += (sender, args) => Process(args.Buffer);
+			capture.Initialize();
+			capture.DataAvailable += (sender, args) => Process(args.Data, args.ByteCount);
 		}
 
 		~ SoundSignal() {
-			capture.StopRecording();
+			//capture.Stop();
 			capture.Dispose();
 		}
 
-		public void Process(byte[] data) {
-			Wave = new double[data.Length / capture.WaveFormat.Channels];
-			FFT  = new double[data.Length / capture.WaveFormat.Channels];
+		public void Process(byte[] data, int bytes) {
+			Wave = new Complex[bytes / 4];
+			FFT  = new Complex[bytes / 4];
 
-			int waveStep = 0;
-
-			for (int i = 0 ; i < Wave.Length ; i += capture.WaveFormat.Channels) {
-				Wave[waveStep] = BitConverter.ToInt16(data, i);
-				waveStep++;
-			}
-
-			Wave.CopyTo(FFT, 0);
-			Fourier.ForwardReal(FFT, 20);
+			convertByteArrayToWave(Wave, data, bytes);
+			applyFFT(Wave, FFT);
 		}
 
 		public void Start() {
-			capture.StartRecording();
+			capture.Start();
 		}
 
 		public void Stop() {
-			capture.StopRecording();
+			capture.Stop();
 		}
 
+		private static void applyFFT(Complex[] wave, Complex[] fftBuffer) {
+			//wave.Select(complex => new Complex(complex.Real * 1000, 0)).ToArray().CopyTo(fftBuffer, 0);
+			wave.CopyTo(fftBuffer, 0);
+			Fourier.Forward(fftBuffer, FourierOptions.NoScaling);
+		}
+
+		private static void convertByteArrayToWave(Complex[] waveBuffer, byte[] byteArray, int length) {
+			if (waveBuffer == null || waveBuffer.Length < MathF.Floor(length / 4.0f))
+				throw new ArgumentException();
+
+			for (int i = 0 ; i < length / 4.0f ; i ++) {
+				waveBuffer[i] = new Complex(BitConverter.ToSingle(byteArray, i * 4), 0);
+			}
+		}
 
 
 		/*
