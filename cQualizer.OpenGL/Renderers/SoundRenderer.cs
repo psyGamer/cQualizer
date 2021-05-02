@@ -1,11 +1,12 @@
 using cQualizer.OpenGL.Components.Graphics;
 using cQualizer.OpenGL.Utils;
 
+using Vector2 = OpenTK.Mathematics.Vector2;
 using OpenTK.Graphics.OpenGL4;
-using OpenTK.Mathematics;
 
 using System;
-
+using System.Linq;
+using System.Numerics;
 
 namespace cQualizer.OpenGL.Renderers {
 
@@ -16,6 +17,8 @@ namespace cQualizer.OpenGL.Renderers {
 		private VertexArray vertexArray;
 		private VertexBuffer vertexBuffer;
 		private IndexBuffer indexBuffer;
+
+		private SoundSignal signal;
 
 		private uint faces;
 
@@ -29,6 +32,9 @@ namespace cQualizer.OpenGL.Renderers {
 
 			vertecies = new float[faces * 3 + 3];
 			indicies  = new uint [faces * 3];
+
+			signal = new SoundSignal();
+			signal.Start();
 
 			float angle = 0;
 
@@ -78,19 +84,49 @@ namespace cQualizer.OpenGL.Renderers {
 			}
 		}
 
+		private static Complex[] downsample(Complex[] numbers, int sampleSize) {
+			var newNumbers = new Complex[sampleSize];
+
+			for (int i = 0 ; i < sampleSize ; i++) {
+				double realSum = 0;
+				double imaginarySum = 0;
+
+				for (int j = i * (numbers.Length / sampleSize) ; j < (i + 1) * (numbers.Length / sampleSize) ; j++) {
+					realSum += numbers[j].Real;
+					imaginarySum += numbers[j].Imaginary;
+				}
+
+				newNumbers[i] = new Complex(realSum / numbers.Length * sampleSize, imaginarySum / numbers.Length * sampleSize);
+			}
+
+			return newNumbers;
+		}
+
 		private void UpdateRadius() {
-			//SoundSignal.GetFFTData(fftData);
+			var fftData = signal.FFT.Where((_, i) => i <= signal.FFT.Length / 2).ToArray();
+
 			if (fftData.Length <= 0) {
 				Console.WriteLine("Unable to get data");
 				return;
 			}
 
-			for (int i = 5 ; i < vertecies.Length ; i += 3) {
-				float positionOnCircumference = map(1, faces / 3, 0.0f, 1.0f, (i - 2) / 3);//(i - 2) / 3 / (float) (faces + 1);
-				int index = (int) map(0.0f, 1.0f, 0.0f, fftData.Length - 1, positionOnCircumference);
+			for (int i = 0 ; i < fftData.Length ; i++) {
+				fftData[i] = new Complex(
+					Math.Asin(2 * i / (float) fftData.Length - 1) / (0.5 * Math.PI),
+					Math.Sin(0.5 * Math.PI * fftData[i].Imaginary)
+				);
+			}
 
-				vertecies[i] = fftData[(int) MathF.Min(index, fftData.Length - 1)] * 10000;
-				Console.WriteLine(vertecies[i]);
+			fftData = downsample(fftData, (int) faces);
+
+			for (uint i = 0 ; i <= Math.Min(fftData.Length, faces) ; i++) {
+				vertecies[i * 3 + 2] = (float) Math.Abs(fftData[i % fftData.Length].Imaginary * 3.0) + 0.1f;
+
+								//float positionOnCircumference = map(1, faces / 3, 0.0f, 1.0f, (i - 2) / 3);//(i - 2) / 3 / (float) (faces + 1);
+				//int index = (int) map(0.0f, 1.0f, 0.0f, fftData.Length - 1, positionOnCircumference);
+
+				////vertecies[i] = fftData[(int) MathF.Min(index, fftData.Length - 1)] * 10000;
+				//Console.WriteLine(vertecies[i]);
 
 				//vertecies[i] = MathF.Abs(MathF.Cos(positionOnCircumference + off)) * 0.6f + 0.2f;//positionOnCircumference / 2.0f; MathF.Abs(vertecies[i - 1]);//(positionOnCircumference * 1000) % 2 == 0 ? 0.3f : 0.6f; //
 			}
@@ -106,9 +142,6 @@ namespace cQualizer.OpenGL.Renderers {
 				//vertecies[i] = new NoiseMap().GetValue(i, Environment.TickCount);
 				//vertecies[i] += (float) new Random().NextDouble() * 0.5f + 0.5f;
 			}*/
-
-			off += 0.01f;
-			off %= MathF.PI;
 
 			vertexArray.Enable();
 			vertexBuffer.SetData(vertecies, -1, BufferUsageHint.DynamicDraw);

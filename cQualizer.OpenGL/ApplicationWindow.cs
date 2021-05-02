@@ -26,12 +26,12 @@ namespace cQualizer.OpenGL {
 			signal = new SoundSignal();
 			//signal.Start();
 
-			RendererRegistry.RegisterRenderer(new FrequencyRenderer());
+			//RendererRegistry.RegisterRenderer(new FrequencyRenderer());
 			//RendererRegistry.RegisterRenderer(new CircleRenderer(50, 0.5f));
 			//RendererRegistry.RegisterRenderer(new SoundRenderer(2, 0.1f));
 			//SoundSignal.Init();
 			//SoundSignal.Start();
-			//RendererRegistry.RegisterRenderer(new SoundRenderer(100));
+			RendererRegistry.RegisterRenderer(new SoundRenderer(100));
 		}
 
 		protected override void OnResize(ResizeEventArgs e) {

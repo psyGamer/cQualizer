@@ -1,8 +1,6 @@
 ﻿using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.Common;
 using OpenTK.Mathematics;
-using System.Numerics;
-using MathNet.Numerics;
 
 namespace cQualizer.OpenGL {
 

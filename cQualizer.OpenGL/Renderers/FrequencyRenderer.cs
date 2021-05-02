@@ -104,8 +104,6 @@ namespace cQualizer.OpenGL.Renderers {
 				double realSum = 0;
 				double imaginarySum = 0;
 
-				// 
-
 				for (int j = i * (numbers.Length / sampleSize) ; j < (i + 1) * (numbers.Length / sampleSize) ; j++) {
 					realSum += numbers[j].Real;
 					imaginarySum += numbers[j].Imaginary;
