@@ -22,16 +22,20 @@ namespace cQualizer.OpenGL.Utils {
 		}
 
 		~ SoundSignal() {
-			//capture.Stop();
+			if(capture.RecordingState == RecordingState.Recording)
+				capture.Stop();
 			capture.Dispose();
 		}
 
 		public void Process(byte[] data, int bytes) {
 			Wave = new Complex[bytes / 4];
 			FFT  = new Complex[bytes / 4];
+			var samples = new Complex[bytes / 4];
 
-			convertByteArrayToWave(Wave, data, bytes);
-			applyFFT(Wave, FFT);
+			convertByteArrayToWave(samples, data, bytes);
+			samples.CopyTo(Wave, 0);
+			Fourier.Forward(samples, FourierOptions.InverseExponent);
+			samples.CopyTo(FFT, 0);
 		}
 
 		public void Start() {

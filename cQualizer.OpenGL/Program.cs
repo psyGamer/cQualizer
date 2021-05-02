@@ -1,6 +1,8 @@
 ﻿using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.Common;
 using OpenTK.Mathematics;
+using System.Numerics;
+using MathNet.Numerics;
 
 namespace cQualizer.OpenGL {
 
@@ -14,7 +16,7 @@ namespace cQualizer.OpenGL {
 			gameSettings.IsMultiThreaded = false;
 			gameSettings.RenderFrequency = 60;
 			gameSettings.UpdateFrequency = 60;
-
+				
 			nativeSettings.IsFullscreen = false;
 			nativeSettings.StartFocused = true;
 			nativeSettings.NumberOfSamples = 0;
@@ -26,6 +28,8 @@ namespace cQualizer.OpenGL {
 			var window = new ApplicationWindow(gameSettings, nativeSettings);
 
 			window.Run();
+			/*int samp = 1000;
+			double[] fund = Generate.Sinusoidal(samp, 2000, 60, 1);*/
 		}
 	}
 }
